@@ -1,6 +1,8 @@
 # ESP32C3-SW
 
-> **Workshop material.** These examples build on
+> **Workshop material.** This is the accompanying software for the
+> [FRI-ESP32-PCB-workshop](https://github.com/bulicp/FRI-ESP32-PCB-workshop)
+> custom ESP32-C3 board, and builds on
 > [FRI-ESP32-C3-MINI-blinky](https://github.com/bulicp/FRI-ESP32-C3-MINI-blinky),
 > a reference example from the Faculty of Computer and Information Science
 > (University of Ljubljana). Contributed as part of the skills and
