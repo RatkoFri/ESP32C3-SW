@@ -143,11 +143,36 @@ From a phone: open any BLE scanner app, find the device advertising as
 — it should update within roughly the fast-advertising-interval window of
 pressing the button.
 
-From a Linux laptop: `bluetoothctl scan on`, then
-`bluetoothctl info <mac>` and look at `ManufacturerData.Value`. See the
-`blink` project's `watch_stevec.sh` / `watch_stevec.py` for ready-made
-scripts that automate this lookup (by device name, no need to hardcode a
-MAC address) and print the decoded counter live.
+From a Linux laptop, the quickest manual check is
+`bluetoothctl scan on`, then `bluetoothctl info <mac>` and look at
+`ManufacturerData.Value`. For a live view, use the included
+[`watch_stevec.py`](watch_stevec.py) instead — it hooks directly into
+BlueZ's advertisement callback via the `bleak` library, so it reacts the
+instant a new packet arrives (no polling delay), and looks the device up
+by name so there's no MAC address to hardcode.
+
+### Setting up the environment for `watch_stevec.py`
+
+On distros that enforce [PEP 668](https://peps.python.org/pep-0668/)
+(e.g. Arch Linux), a plain `pip install` is blocked system-wide, so use a
+virtual environment:
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+```
+
+Then run it (leave it running, no `scan on` needed separately — the script
+manages scanning itself):
+
+```bash
+.venv/bin/python watch_stevec.py
+```
+
+It prints `iscem napravo 'ESP32C3-tipka' ...` while searching, then
+`stevec pritiskov: N` every time the counter changes. No special
+permissions are needed beyond normal Bluetooth access (the same access
+level `bluetoothctl` already has for your user).
 
 ## A known rough edge
 
